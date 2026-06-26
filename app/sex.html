@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>World Sex Map — human sexuality around the world</title>
+<link rel="stylesheet" href="sex.css?v=1">
+</head>
+<body>
+  <!-- ===== Header ===== -->
+  <header id="topbar">
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="12.5" cy="13" r="6" fill="none" stroke="#ff5e9a" stroke-width="2.4"/>
+        <path d="M12.5 19 V27 M9 23.5 H16" fill="none" stroke="#ff5e9a" stroke-width="2.4" stroke-linecap="round"/>
+        <circle cx="20.5" cy="20" r="6" fill="none" stroke="#6f8cff" stroke-width="2.4"/>
+        <path d="M24.7 15.8 L29.5 11 M25.5 11 H29.5 V15" fill="none" stroke="#6f8cff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="brand-txt">
+        <span class="brand-name">World Sex Map</span>
+        <span class="brand-sub">Sex, attraction &amp; sexual health across the world — and through history</span>
+      </div>
+    </div>
+    <div class="tools">
+      <div id="searchWrap">
+        <input id="search" type="text" placeholder="Search a country…" autocomplete="off" spellcheck="false" aria-label="Search a country">
+        <div id="searchResults" class="hidden"></div>
+      </div>
+      <button id="menuBtn" title="Menu" aria-label="Menu">☰</button>
+      <div id="menu" class="hidden">
+        <button class="mi" id="miView"><span class="mi-ic">🗺</span><span class="mi-tx">Flat map</span></button>
+        <button class="mi" id="miShare"><span class="mi-ic">🔗</span><span class="mi-tx">Share this view</span></button>
+        <div class="mi-sep"></div>
+        <button class="mi mi-globe" id="miSpin"><span class="mi-ic">⟳</span><span class="mi-tx">Auto-rotate</span><span class="mi-state">On</span></button>
+        <button class="mi" id="miReset"><span class="mi-ic">⤢</span><span class="mi-tx">Reset view</span></button>
+        <button class="mi" id="miFull"><span class="mi-ic">⛶</span><span class="mi-tx">Fullscreen</span></button>
+        <div class="mi-sep"></div>
+        <button class="mi" id="miTrend"><span class="mi-ic">📈</span><span class="mi-tx">Global trends over time</span></button>
+        <button class="mi" id="miHelp"><span class="mi-ic">?</span><span class="mi-tx">How to use</span></button>
+        <button class="mi" id="miAbout"><span class="mi-ic">ℹ</span><span class="mi-tx">About &amp; sources</span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Map ===== -->
+  <div id="globeViz"></div>
+  <svg id="flatViz" class="hidden" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div id="tooltip" class="hidden"></div>
+  <div id="toast" class="hidden"></div>
+
+  <!-- ===== Left: perspective + legend + ranking ===== -->
+  <div id="legendBox">
+    <div class="gb-cap">Perspective</div>
+    <select id="perspective" aria-label="Choose a sexuality perspective"></select>
+    <div class="persp-desc" id="perspDesc">—</div>
+    <div class="gb-stat"><span id="gbStat">—</span> <small id="gbStatLabel">world average</small></div>
+    <div class="legend" id="legend"></div>
+    <div class="gb-rows" id="gbRows"></div>
+    <div class="gb-note">Click a country for its full profile &middot; most figures are survey estimates</div>
+  </div>
+
+  <!-- ===== Right: country detail ===== -->
+  <div id="detailCard" class="hidden">
+    <button class="card-close" id="detailClose" title="Close">×</button>
+    <div class="detail-head"><span id="detailFlag" class="detail-flag">🏳️</span>
+      <div><div id="detailName" class="detail-name">—</div><div id="detailSub" class="detail-sub"></div></div>
+    </div>
+    <div id="detailMetrics"></div>
+    <div id="detailNote" class="detail-note"></div>
+  </div>
+
+  <!-- ===== Right: history event ===== -->
+  <div id="eventCard" class="hidden">
+    <button class="card-close" id="eventClose" title="Close">×</button>
+    <div class="ev-top">
+      <div class="ev-cat"><span class="ev-cat-dot" id="evCatDot"></span><span id="evCat">—</span></div>
+      <div class="ev-title" id="evTitle">—</div>
+      <div class="ev-meta" id="evMeta">—</div>
+      <p class="ev-blurb" id="evBlurb">—</p>
+    </div>
+    <div class="ev-src" id="evSrcWrap">
+      <div class="ev-src-cap">Sources</div>
+      <div id="evSrc"></div>
+    </div>
+  </div>
+
+  <!-- ===== Bottom: history-of-sexuality timeline ===== -->
+  <div id="timebar">
+    <div class="tl-readhead">
+      <span class="tl-title">The history of sexuality</span>
+      <span id="eraLabel" class="era-label">today</span>
+      <span id="eraBadge" class="era-badge era-contemporary">contemporary</span>
+      <span id="eraStat" class="tt-sub"></span>
+    </div>
+    <svg id="tlChart" viewBox="0 0 1000 74" preserveAspectRatio="none"></svg>
+    <div class="slider-row">
+      <button id="prevEra" class="step" title="Back (←)">‹</button>
+      <button id="nextEra" class="step" title="Forward (→)">›</button>
+      <input id="timeSlider" type="range" min="0" max="15" value="15" step="1" aria-label="Time">
+      <button id="playRevBtn" class="play" title="Play backward">◀</button>
+      <button id="playBtn" class="play" title="Play forward">▶</button>
+      <button id="nowBtn" class="nowbtn" title="Jump to today">today</button>
+    </div>
+    <div class="time-ends"><span>3000 BCE</span><span id="tlKey" class="tl-trackkey"></span><span>today</span></div>
+  </div>
+
+  <!-- ===== About ===== -->
+  <div id="aboutOverlay" class="hidden">
+    <div class="about-box">
+      <button id="aboutClose" class="about-close" title="Close">×</button>
+      <h2>World Sex Map</h2>
+      <p>An interactive atlas of human sexuality around the world — and a timeline of sexuality through history.
+      Colour the globe by any <b>perspective</b>: how often people have sex, satisfaction, number of partners,
+      age at first sex, sexual openness, acceptance of premarital sex and of homosexuality, infidelity, porn
+      interest, contraception, condom use, HIV, teen births, the legal age of consent, or the legal status of
+      sex work. Click any country for its full profile.</p>
+      <p>Below, scrub the <b>history of sexuality</b> — from ancient fertility cults and the Kama Sutra to the
+      condom, the Pill, Kinsey, the sexual revolution, AIDS and marriage equality — and see where each milestone
+      happened.</p>
+      <p class="about-cav"><b>Please read — data quality varies a lot.</b> Much of this is <b>self-reported
+      survey data</b> (people under- and over-report sex), often dated and from non-representative samples.
+      Behavioural figures (frequency, partners, satisfaction, infidelity) are the weakest; legal and health
+      figures (age of consent, HIV, teen births, contraception) are the strongest. <b>“Perceived
+      attractiveness” is explicitly subjective</b> — it reflects opinion polls and stereotypes, not any
+      objective fact. Treat everything here as indicative, never as exact and never as a judgement of any
+      individual.</p>
+      <p class="about-src">Sources: DHS &amp; MICS · UNAIDS · WHO · UN Population Division · World Bank ·
+      World Values Survey · Pew Research · Natsal · Kinsey Institute · Durex Global Sex Survey ·
+      Pornhub Insights · AgeOfConsent.net. Borders: Natural Earth. Globe: globe.gl.</p>
+    </div>
+  </div>
+
+  <!-- ===== First-run tutorial ===== -->
+  <div id="tutorial" class="hidden">
+    <div class="tut-box">
+      <svg class="tut-logo" viewBox="0 0 32 32" aria-hidden="true" style="background:#150e22">
+        <circle cx="12.5" cy="13" r="6" fill="none" stroke="#ff5e9a" stroke-width="2.4"/>
+        <path d="M12.5 19 V27 M9 23.5 H16" fill="none" stroke="#ff5e9a" stroke-width="2.4" stroke-linecap="round"/>
+        <circle cx="20.5" cy="20" r="6" fill="none" stroke="#6f8cff" stroke-width="2.4"/>
+        <path d="M24.7 15.8 L29.5 11 M25.5 11 H29.5 V15" fill="none" stroke="#6f8cff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h2>Welcome to the World Sex Map</h2>
+      <p class="tut-lead">Explore human sexuality across every country — attraction, behaviour, attitudes and sexual health — then travel through the history of sexuality.</p>
+      <div class="tut-steps">
+        <div class="tut-step"><span class="tut-ic">🎚️</span><div><b>Switch perspective.</b> Use the dropdown (top-left) to colour the world by sex frequency, partners, openness, age of consent, HIV, porn interest and more.</div></div>
+        <div class="tut-step"><span class="tut-ic">🗺️</span><div><b>Click any country</b> for its full sexuality profile — every metric at once.</div></div>
+        <div class="tut-step"><span class="tut-ic">🕓</span><div><b>Scrub the timeline</b> at the bottom to explore the history of sexuality; click a milestone to see where it happened.</div></div>
+        <div class="tut-step"><span class="tut-ic">🌐</span><div><b>Globe or flat map</b>, search any country, and share a link to any view — all from the ☰ menu.</div></div>
+      </div>
+      <p class="tut-cav">Much of this is self-reported survey data — indicative, not exact. <b>“Perceived attractiveness” is subjective opinion, not fact.</b> See <b>About</b> for sources &amp; caveats.</p>
+      <button id="tutStart" class="tut-btn">Start exploring →</button>
+    </div>
+  </div>
+
+  <!-- ===== Flat-map tip ===== -->
+  <div id="flatTip" class="hidden">
+    <div class="tut-box">
+      <h2>🗺️ The flat map</h2>
+      <p class="tut-lead">The same data as the globe — every country coloured by the chosen perspective — on a flat map.</p>
+      <div class="tut-steps">
+        <div class="tut-step"><span class="tut-ic">🔍</span><div><b>Zoom &amp; pan.</b> Scroll to zoom, drag to move; recentre via ☰ → <b>Reset view</b>.</div></div>
+        <div class="tut-step"><span class="tut-ic">👆</span><div><b>Hover</b> for the value; <b>click</b> a country for its full profile, or a <b>pin</b> for a history milestone.</div></div>
+      </div>
+      <button id="ftStart" class="tut-btn">Got it</button>
+    </div>
+  </div>
+
+  <!-- ===== Global trends overlay ===== -->
+  <div id="trendOverlay" class="hidden">
+    <div class="trend-box">
+      <button id="trendClose" class="about-close" title="Close">×</button>
+      <h2>Global trends over time</h2>
+      <p class="trend-sub">How sexuality has shifted worldwide over the last century.</p>
+      <div id="wtChart"></div>
+      <div id="wtLegend" class="wt-legend"></div>
+      <p class="wt-cav">Global / representative-developed-world averages; illustrative. Age at first sex has fallen, while reported partner counts, contraceptive use and acceptance of premarital sex have risen.</p>
+    </div>
+  </div>
+
+  <script src="lib/globe.gl.min.js"></script>
+  <script src="lib/polygon-clipping.js"></script>
+  <script src="data/history.js?v=1"></script>
+  <script src="data/sex-data.js?v=2"></script>
+  <script src="sex.js?v=1"></script>
+</body>
+</html>
