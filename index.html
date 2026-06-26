@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>World Sex Map — human sexuality around the world</title>
+<meta name="description" content="An interactive globe that colours every country by a dimension of human sexuality — frequency, satisfaction, partners, openness, age of consent, HIV, porn interest and more — beside a scrubbable history of sexuality from ancient fertility cults to the Pill and marriage equality. Private, runs in your browser.">
+<link rel="icon" href="assets/icon.png">
+<meta property="og:title" content="World Sex Map">
+<meta property="og:description" content="Human sexuality for every country on an interactive globe — plus the history of sexuality from antiquity to today.">
+<meta property="og:type" content="website">
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #f3e7ee;
+    background: radial-gradient(1200px 820px at 72% -12%, #4a1230 0%, #1c0c18 46%, #07040c 100%);
+    min-height: 100vh;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 40px 24px 100px; }
+  .top { display: flex; align-items: center; gap: 12px; margin: 0 0 44px; }
+  .logo { width: 46px; height: 46px; filter: drop-shadow(0 2px 6px rgba(0,0,0,.5)); }
+  .brandname { font-weight: 700; font-size: 17px; color: #fceaf2; }
+  .eyebrow { letter-spacing: .16em; text-transform: uppercase; font-size: 12px; color: #ff8fbb; margin: 0 0 10px; }
+  h1 { font-size: 42px; line-height: 1.12; margin: 0 0 16px; color: #fff; }
+  h1 .gold { color: #ff7aa6; }
+  .lede { font-size: 19px; color: #e0cad8; margin: 0 0 26px; max-width: 64ch; }
+  a { color: #ff9ec6; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 8px; align-items: center; }
+  .cta {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: linear-gradient(180deg, #ff7eb0, #ff4f87);
+    color: #2a0a18; text-decoration: none; font-weight: 700;
+    padding: 13px 24px; border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.16);
+    box-shadow: 0 6px 24px rgba(255,79,135,.4);
+  }
+  .cta:hover { background: linear-gradient(180deg, #ff95c1, #ff6699); }
+  .note { color: #c79bb4; font-size: 14px; margin: 14px 0 0; }
+  .hero { width: 100%; border-radius: 16px; margin: 38px 0 8px; border: 1px solid rgba(255,255,255,.1); box-shadow: 0 20px 60px rgba(0,0,0,.5); display: block; background: #170c18; }
+  .herocap { color: #c79bb4; font-size: 13px; text-align: center; margin: 10px 0 0; }
+  h2 { font-size: 22px; margin: 56px 0 16px; color: #fff; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 20px 22px; }
+  .card h3 { margin: 0 0 8px; font-size: 16px; color: #f6d7e6; display: flex; align-items: center; gap: 8px; }
+  .card p { margin: 0; color: #d4c0d0; font-size: 15px; }
+  .sw { width: 11px; height: 11px; border-radius: 3px; flex: none; }
+  .data { color: #d0bccc; font-size: 15px; max-width: 72ch; }
+  .caveat { margin-top: 18px; background: rgba(255,79,135,.08); border: 1px solid rgba(255,79,135,.28); border-radius: 14px; padding: 18px 22px; color: #f0d3e0; font-size: 15px; max-width: 74ch; }
+  .caveat strong { color: #fff; }
+  .privacy { margin-top: 20px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 22px 24px; }
+  .privacy strong { color: #fff; }
+  footer { margin-top: 56px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.08); color: #c79bb4; font-size: 14px; }
+  footer a { color: #ff9ec6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <img class="logo" src="assets/logo.svg" alt="">
+    <span class="brandname">World Sex Map</span>
+  </header>
+
+  <p class="eyebrow">Interactive globe &amp; timeline</p>
+  <h1>Human sexuality around the world — <span class="gold">behaviour, attitudes, health &amp; history</span></h1>
+  <p class="lede">An interactive globe that colours every country by a dimension of human sexuality — <b>how often
+  people have sex</b>, satisfaction, partners, age at first sex, <b>sexual openness</b>, acceptance, infidelity,
+  porn interest, contraception, HIV, the legal age of consent and the legal status of sex work — beside a
+  scrubbable <b>history of sexuality</b> from ancient fertility cults to the Pill, Kinsey and marriage equality.</p>
+
+  <div class="ctas">
+    <a class="cta" href="app/sex.html">Launch the map →</a>
+  </div>
+  <p class="note">A free microsite · no accounts · collects no data · runs entirely in your browser</p>
+
+  <!-- hero: an openness ramp + Venus/Mars mark + history timeline -->
+  <svg class="hero" viewBox="0 0 900 300" role="img" aria-label="A world coloured by sexual openness, above a timeline of the history of sexuality.">
+    <rect width="900" height="300" rx="16" fill="#170c18"/>
+    <text x="40" y="40" fill="#d09ec0" font-size="13" letter-spacing="2" style="text-transform:uppercase">One world, sixteen perspectives</text>
+    <defs>
+      <linearGradient id="ramp" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#1b2c49"/><stop offset="50%" stop-color="#2f6fe0"/><stop offset="100%" stop-color="#a9d4ff"/>
+      </linearGradient>
+    </defs>
+    <rect x="40" y="58" width="820" height="22" rx="7" fill="url(#ramp)"/>
+    <text x="40" y="98" fill="#8fb4e8" font-size="12">more conservative</text>
+    <text x="860" y="98" fill="#a9d4ff" font-size="12" text-anchor="end">more open</text>
+    <!-- Venus / Mars mark -->
+    <g transform="translate(430,150)" fill="none" stroke-width="6">
+      <circle cx="-2" cy="-6" r="15" stroke="#ff5e9a"/>
+      <path d="M-2 9 V31 M-13 20 H9" stroke="#ff5e9a" stroke-linecap="round"/>
+      <circle cx="22" cy="11" r="15" stroke="#6f8cff"/>
+      <path d="M33 0 L46 -13 M37 -13 H46 V-4" stroke="#6f8cff" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <!-- history timeline -->
+    <text x="40" y="214" fill="#ff7aa6" font-size="13" font-weight="600">The history of sexuality</text>
+    <line x1="40" y1="244" x2="860" y2="244" stroke="rgba(255,255,255,.16)"/>
+    <g stroke="rgba(8,6,16,.5)">
+      <circle cx="80"  cy="244" r="7" fill="#c08a3a"/>
+      <circle cx="180" cy="244" r="7" fill="#9b6fd0"/>
+      <circle cx="300" cy="244" r="7" fill="#5e8bef"/>
+      <circle cx="430" cy="244" r="7" fill="#3fae6a"/>
+      <circle cx="560" cy="244" r="7" fill="#2fa8a0"/>
+      <circle cx="660" cy="244" r="7" fill="#c0392b"/>
+      <circle cx="760" cy="244" r="7" fill="#e0962f"/>
+      <circle cx="845" cy="244" r="7" fill="#e0568f"/>
+    </g>
+    <text x="80"  y="276" fill="#d4c0d0" font-size="11" text-anchor="middle">fertility cults</text>
+    <text x="430" y="276" fill="#d4c0d0" font-size="11" text-anchor="middle">the condom</text>
+    <text x="660" y="276" fill="#d4c0d0" font-size="11" text-anchor="middle">the Pill</text>
+    <text x="845" y="276" fill="#d4c0d0" font-size="11" text-anchor="end">today</text>
+    <text x="40"  y="294" fill="#8c6b8f" font-size="11">3000 BCE</text>
+  </svg>
+  <p class="herocap">Recolour the world by any dimension of sexuality, then travel through the history of sexuality itself.</p>
+
+  <h2>What it does</h2>
+  <div class="grid">
+    <div class="card"><h3><span class="sw" style="background:#2f6fe0"></span><span class="sw" style="background:#2fa84f"></span><span class="sw" style="background:#c0392b"></span>Sixteen perspectives, one world</h3><p>Recolour the globe by <b>sex frequency</b>, satisfaction, partners, age at first sex, openness, acceptance of premarital sex &amp; homosexuality, infidelity, <b>porn interest</b>, contraception, condom use, HIV, teen births, age of consent or prostitution legality — plus a clearly-labelled <b>subjective</b> "perceived attractiveness" layer.</p></div>
+    <div class="card"><h3>Every country, profiled</h3><p>Click any of <b>223 countries &amp; territories</b> for its full sexuality profile — every metric at once — plus a live ranked list of the highest and lowest on the metric you're viewing.</p></div>
+    <div class="card"><h3>The history of sexuality</h3><p><b>30 milestones</b>, 3000 BCE → today: ancient fertility cults, the Kama Sutra, the condom, Comstock laws, Freud, <b>Kinsey</b>, the Pill, Stonewall, AIDS, marriage equality and #MeToo. Click one to see where it happened.</p></div>
+    <div class="card"><h3>Sexual health</h3><p>See the <b>legal age of consent</b>, contraceptive and condom use, <b>HIV prevalence</b> and teen birth rates around the world — the strongest, most complete data on the map.</p></div>
+    <div class="card"><h3>Global trends</h3><p>Watch age at first sex, partner counts, acceptance and contraception <b>shift over a century</b> in a global-trends chart — the long arc behind the snapshot on the map.</p></div>
+    <div class="card"><h3>Globe, flat map, search &amp; share</h3><p>Spin a 3D globe or switch to a flat map, search any country to fly to it, and copy a link to an exact view — a perspective, a country, a milestone — to share what you found.</p></div>
+  </div>
+
+  <h2>About the data</h2>
+  <p class="data">Figures are drawn from <b>DHS &amp; MICS</b> surveys, <b>UNAIDS</b>, the <b>WHO</b>, the
+  <b>UN Population Division</b>, the <b>World Bank</b>, the <b>World Values Survey</b>, <b>Pew Research</b>,
+  <b>Natsal</b>, the <b>Kinsey Institute</b>, the <b>Durex Global Sex Survey</b>, <b>Pornhub Insights</b> and
+  national statistics. Country outlines: Natural Earth (public domain). Globe: globe.gl.</p>
+
+  <div class="caveat">
+    <strong>Please read — data quality varies a lot.</strong> Much of this is <b>self-reported survey data</b>
+    (people under- and over-report sex), often dated and from non-representative samples. Behavioural figures
+    (frequency, partners, satisfaction, infidelity) are the weakest; legal and health figures (age of consent,
+    HIV, teen births, contraception) are the strongest. <b>“Perceived attractiveness” is explicitly subjective</b>
+    — it reflects opinion polls and stereotypes, not any objective fact. Treat everything here as indicative,
+    never as exact, and never as a judgement of any individual.
+  </div>
+
+  <div class="privacy">
+    <strong>Privacy:</strong> the World Sex Map collects nothing, sends nothing, and makes no network requests
+    beyond loading the map. It requests no browser permissions and works fully offline. Read the full
+    <a href="privacy.html">privacy policy</a>.
+  </div>
+
+  <footer>
+    A <a href="https://42-apps.github.io/">42-apps</a> mini-site. &nbsp;·&nbsp; Data: DHS · UNAIDS · WHO ·
+    UN Population Division · World Bank · World Values Survey · Pew · Natsal · Kinsey · Durex · Pornhub Insights.
+    Borders: Natural Earth. Globe: globe.gl.
+  </footer>
+</div>
+</body>
+</html>

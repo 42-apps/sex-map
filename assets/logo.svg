@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <radialGradient id="bg" cx="38%" cy="30%" r="82%">
+      <stop offset="0%" stop-color="#4a1538"/>
+      <stop offset="55%" stop-color="#220c1e"/>
+      <stop offset="100%" stop-color="#0a0410"/>
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#bg)"/>
+  <!-- Venus (female) -->
+  <circle cx="48" cy="50" r="20" fill="none" stroke="#ff5e9a" stroke-width="8"/>
+  <path d="M48 70 V100 M34 85 H62" fill="none" stroke="#ff5e9a" stroke-width="8" stroke-linecap="round"/>
+  <!-- Mars (male) -->
+  <circle cx="80" cy="76" r="20" fill="none" stroke="#6f8cff" stroke-width="8"/>
+  <path d="M94.1 61.9 L112 44 M99 44 H112 V57" fill="none" stroke="#6f8cff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
